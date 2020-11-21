@@ -1,0 +1,45 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="box">
+    <div class="border-bot">
+      <div class="right-bot-corner">
+        <div class="left-bot-corner">
+          <div class="inner">
+            <div class="box1 alt">
+              <div class="inner">
+                <h4><b>Asesor</b> de Autos</h4>
+                <p class="p0"> Sitio web para la busqueda de profesionales en el asesoramiento de autos, servicio post-venta de automobiles, de marcas de prestigio mundial tales como Mercedes-Benz, Freightliner, Western Star, Chrysler, Jeep, Dodge y RAM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="indent">
+    <div class="wrapper">
+      <div class="col-1">
+        <h3><b>{{asesor.nombre}}</b> </h3>
+        <div class="img-box1"><img src="/media/{{asesor.foto}}" width="120" height="100" alt="" />
+          <p class="p0">{{asesor.funcion}}</p>
+        </div>
+        <p>Teléfono: {{asesor.telefono}}</p>
+        <p>Correo: {{asesor.correo}}</p>
+        <p>Precio: {{asesor.precio}}</p>
+        <p>Región: {{asesor.region.nombre}}</p>
+        <p> <button onclick="contratarAsesor();" >Contratar Asesor</button> </p>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+var id = '{{asesor.id}}'
+function contratarAsesor(){
+  document.location = "/pago/"+id+"/"
+}
+</script>
+
+  {% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+
+<div>
+    <div class="wrapper">
+      <div class="col-1">
+        <h3><b>Registrar</b> Región</h3>
+        <form id="contacts-form" method="post" action="{% url 'main:registrarRegionAPI' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+          <fieldset>
+            <div class="field">
+              <label>Nombre:</label>
+              <input type="text" name="nombre" id="id_nombre">
+            </div>
+
+            <div class="wrapper"><button type="submit" class="link1"><em><b>REGISTRAR</b></em></button></div>
+        </fieldset>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

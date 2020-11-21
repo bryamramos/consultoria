@@ -1,0 +1,183 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+
+<div class="box">
+    <div class="border-bot">
+      <div class="right-bot-corner">
+        <div class="left-bot-corner">
+          <div class="inner">
+            <div class="box1 alt">
+              <div class="inner">
+                <h4><b>Asesor</b> de Autos</h4>
+                <p class="p0"> Sitio web para la busqueda de profesionales en el asesoramiento de autos, servicio post-venta de automobiles, de marcas de prestigio mundial tales como Mercedes-Benz, Freightliner, Western Star, Chrysler, Jeep, Dodge y RAM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="indent">
+    <div class="wrapper">
+      <div class="col-1">
+        <h3><b>{{asesor.nombre}}</b> </h3>
+        <div class="img-box1"><img src="/media/{{asesor.foto}}" width="120" height="100" alt="" />
+          <p class="p0">{{asesor.funcion}}</p>
+        </div>
+        <p>Teléfono: {{asesor.telefono}}</p>
+        <p>Correo: {{asesor.correo}}</p>
+        <p>Precio: {{asesor.precio}}</p>
+        <p>Región: {{asesor.region.nombre}}</p>
+      </div>
+      <div class="col-2">
+        <div class="box2">
+          <div class="border-top">
+            <div class="left-top-corner">
+              <div class="right-top-corner">
+                <div class="inner">
+                  <h4><b>Contáctenos</h4>
+                <form id="form-registro">
+                  <fieldset>
+                    <div class="field">
+                      <label>Nombres:</label><br>
+                      <input type="text" name="nombre" id="id_nombre">
+                    </div>
+                    <br>
+                    <div class="field">
+                        <label>Apellidos:</label><br>
+                        <input type="text" name="apellido" id="id_apellido">
+                      </div>
+                      <br>
+                    <div class="field">
+                      <label>Teléfono:</label><br>
+                      <input type="text" name="telefono" id="id_telefono">
+                    </div>
+                    <br>
+                    <div class="field">
+                      <label>Dirección:</label><br>
+                      <input type="text" name="direccion" id="id_direccion">
+                    </div>
+                    <br>
+                    <div class="field">
+                      <label>Asunto:</label><br>
+                      <textarea cols="30" rows="5" name="asunto" id="id_asunto"></textarea>
+                    </div>
+                    
+                  </fieldset>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h4>Método de Pago:</h4>
+        <div id="paypal-button-container"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=ASjUF2dRAxzw0fNC-5vd-URm9UVfRpj4uotiHUQOeo4zLNZdj4hLfOSeGfvpnegyce1MFJ_7HdseaRu8&currency=USD"></script>
+
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+
+<script>
+    function error(){
+        alert ("Usted no registro todo sus datos");
+    }
+    var precio = '{{asesor.precio}}'
+    var id = "{{asesor.id}}"
+
+    
+
+    paypal.Buttons({
+
+        // style: {
+        //     color: "blue",
+        //     shape: "pill",
+        //     label: "pay",
+        //     height: 30,
+        //     width: 50
+        // },
+        
+        createOrder: function(data,actions) {
+            var nombre = $("#id_nombre").val();
+            var apellido = $("#id_apellido").val();
+            var telefono = $("#id_telefono").val();
+            var direccion = $("#id_direccion").val();
+            var asunto = $("#id_asunto").val(); 
+
+            if(nombre != "" && apellido != "" && telefono !="" && direccion != "" && asunto != ""){
+                return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: precio
+                    }
+                }]
+                });
+            }else{
+                return error();
+            }
+            
+        },
+
+        onApprove: function (data,actions) {
+            var nombre = $("#id_nombre").val();
+            var apellido = $("#id_apellido").val();
+            var telefono = $("#id_telefono").val();
+            var direccion = $("#id_direccion").val();
+            var asunto = $("#id_asunto").val(); 
+
+            var data = {}
+            data.nombre = nombre;
+            data.apellido = apellido;
+            data.telefono = telefono;
+            data.direccion = direccion;
+            data.asunto = asunto;
+
+            data = JSON.stringify(data);
+            console.log(data)
+            autenticarFuncion();
+            $.ajax({
+                type: "POST",
+                url: "/api/contrata/registrar/"+id+"/",
+                contentType : 'application/json',
+                data: data,
+                success: function (data) {
+                    $("#form-registro")[0].reset();
+                }
+            });
+
+            return actions.order.capture().then(function(details) {
+                alert("Su transacion ha sido completada como " + details.payer.name.given_name + " nos pondremos en contacto con usted en la brevedad posible!" );
+            });
+        }
+
+    }).render('#paypal-button-container');
+
+
+    function autenticarFuncion(){
+    var csrftoken = $.cookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+}
+</script>
+{% endblock %}

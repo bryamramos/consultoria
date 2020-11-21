@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="box">
+    <div class="border-bot">
+      <div class="right-bot-corner">
+        <div class="left-bot-corner">
+          <div class="inner">
+            <div class="box1 alt">
+              <div class="inner">
+                <h4><b>Contactos</b> </h4>
+                <div class="address"><b>Ciudad:</b>05000<br />
+                  <b>Dirección:</b>Ciro Alegria<br />
+                  <b>Teléfono:</b>+354 5635600<br />
+                  <b>Celular:</b>+51 918262097</div>
+                <p class="p0 extra-wrap"><b>El equipo de CarAdvisory agradece tu interés.</b><br />
+                  Esta área es para que puedas solicitar información adicional y/o específica sobre tu vehículo y/o el plan financiero que quieres para comprarlo. También puedes hacer una cita para visitar nuestras oficinas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="indent">
+    <div class="wrapper">
+      <div class="col-1">
+        <h3><b>Formulario</b> de Contacto</h3>
+        <form id="contacts-form" action="#">
+          <fieldset>
+            <div class="field">
+              <label>Nombre:</label>
+              <input type="text" value=""/>
+            </div>
+            <div class="field">
+              <label>Apellido:</label>
+              <input type="text" value=""/>
+            </div>
+            <div class="field">
+              <label>E-mail:</label>
+              <input type="text" value=""/>
+            </div>
+            <div class="field">
+              <label>Mensaje:</label>
+              <textarea cols="1" rows="1"></textarea>
+            </div>
+            <div class="wrapper"><a href="#" class="link1"><em><b>ENVIAR</b></em></a></div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

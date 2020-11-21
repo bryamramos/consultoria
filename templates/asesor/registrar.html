@@ -1,0 +1,75 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+
+<div>
+    <div class="wrapper">
+      <div class="col-1">
+        <h3><b>Registrar</b> Asesor</h3>
+        <form id="contacts-form" method="post" action="{% url 'main:registrarAsesorAPI' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+          <fieldset>
+            <div class="field">
+              <label>Nombre:</label>
+              <input type="text" name="nombre" id="id_nombre">
+            </div>
+            <div class="field">
+              <label>Tipo de documento:</label>
+              <input type="text" name="tipo_documento" id="id_tipo_documento">
+            </div>
+            <div class="field">
+              <label>Numero de documento:</label>
+              <input type="text" name="documento" id="id_documento">
+            </div>
+            <div class="field">
+                <label>Telefono:</label>
+                <input type="text" name="telefono" id="id_telefono">
+              </div>
+              <div class="field">
+                <label>Correo:</label>
+                <input type="text" name="correo" id="id_correo">
+              </div>
+            <div class="field">
+              <label>Funcion:</label>
+              <textarea cols="1" rows="1" name="funcion" id="id_funcion"></textarea>
+            </div>
+            <div class="field">
+                <label>Precio:</label>
+                <input type="number" name="precio" id="id_lrecio">
+            </div>
+
+            <div class="field">
+                <label for="">Region:</label>
+                        <select name="region" id="id_region" >
+                            <option value="">Seleccione la region...</option>
+                            {% for region in regiones %}
+                                <option value="{{region.id}}">{{region.nombre}}</option>
+                            {% endfor %}
+                        </select>
+            </div>
+            
+            <div class="field">
+                <label>Foto:</label>
+                <input type="file" name="foto" id="id_foto">
+            </div>
+            
+            
+    
+            <div class="wrapper"><button type="submit" class="link1"><em><b>Registrar</b></em></button></div>
+        </fieldset>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}
